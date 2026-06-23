@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마음 우체통</title>
+  <style>
+    body { font-family: 'Pretendard', sans-serif; background-color: #fdf6f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+    .container { background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 90%; max-width: 400px; text-align: center; }
+    h2 { color: #5d4037; }
+    input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+    button { background-color: #a1887f; color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; width: 100%; font-size: 16px; }
+    button:hover { background-color: #8d6e63; }
+    #message { margin-top: 15px; color: #5d4037; font-weight: bold; display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>마음 우체통 💌</h2>
+    <p>선생님께 하고 싶은 이야기를 남겨주세요.</p>
+    <input type="text" id="name" placeholder="이름 (선택 사항)">
+    <textarea id="content" rows="5" placeholder="고민 내용을 적어주세요..."></textarea>
+    <button onclick="sendData()">전송하기</button>
+    <div id="message">선생님께 비밀이 전송되었습니다.</div>
+  </div>
+
+  <script>
+    function sendData() {
+      const name = document.getElementById('name').value;
+      const content = document.getElementById('content').value;
+      
+      // 반영된 웹 앱 URL
+      const url = "https://script.google.com/macros/s/AKfycbytcAnEyTUtink65lTHPT-LmeQ44-1rexbmfiUDxJhaFj0LXZrk_Y81D_4xo-UMM9MEkw/exec"; 
+      
+      if (!content) { 
+        alert('고민 내용을 입력해주세요.'); 
+        return; 
+      }
+      
+      fetch(url, { 
+        method: 'POST', 
+        mode: 'no-cors', 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({name, content}) 
+      })
+      .then(() => {
+        document.getElementById('message').style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('전송 중 오류가 발생했습니다.');
+      });
+    }
+  </script>
+</body>
+</html>
